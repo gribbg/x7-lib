@@ -1,7 +1,7 @@
 default: help
 
 # Based on https://gist.github.com/lumengxi/0ae4645124cd4066f676
-.PHONY: clean-pyc clean-build docs clean
+.PHONY: clean-pyc clean-build docs clean git-clean
 
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -17,7 +17,7 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 PYTHON := ./venv/bin/python3
 SYS_PYTHON := python3.8
 
-# Don't descend into any .dirs or venv.  Use like '$(FIND_SKIP) -other -find -args'
+# Don't descend into any dotted dirs or venv.  Use like '$(FIND_SKIP) -other -find -args'
 FIND_SKIP := find -E . -regex './(\..*|venv).*' -prune -o
 PROJECT_DIR := x7
 
@@ -32,7 +32,8 @@ help:
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	@echo "release - package and upload a release"
+	@echo "upload-test - package and upload a release to test.pypi"
+	@echo "upload-prod - package and upload a release to pypi"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
 
@@ -93,14 +94,13 @@ docs:
 servedocs: docs
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-release: clean
-	$(PYTHON) setup.py sdist upload
-	$(PYTHON) setup.py bdist_wheel upload
+git-clean:
+	git status | grep --quiet 'nothing to commit, working tree clean' || (git status && exit 1)
 
-upload-test: dist
+upload-test: git-clean dist
 	$(PYTHON) -m twine upload --repository testpypi dist/*
 
-upload-prod: dist
+upload-prod: git-clean dist
 	$(PYTHON) -m twine upload --repository pypi dist/*
 
 dist: clean
