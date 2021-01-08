@@ -21,5 +21,3 @@ class Timer(object):
         self.end = time.time_ns()
         total = self.end - self.start
         print('%s: %s ms' % (self.tag, total / 1000000))
-
-
