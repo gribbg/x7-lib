@@ -24,5 +24,3 @@ def Dir(v):
     """Like dir(v), but only non __ names"""
 
     return [n for n in dir(v) if not n.startswith('__')]
-
-

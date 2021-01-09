@@ -30,7 +30,4 @@ def load_tools(other_globals: dict):
     if not loaded_modules:
         print('No shell tools found')
     else:
-        # print("Tools imported.  Commands: %s" % ', '.join(t + '()' for t in loaded_tools))
         x7.lib.shell_tools.tools()
-
-
