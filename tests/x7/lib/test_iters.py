@@ -27,3 +27,12 @@ class TestModIters(TestCase):
         self.assertEqual([('c', 'a', 'b'), ('a', 'b', 'c')], list(iters.iter_rotate('abc', 3, -1, cycle=False)))
         self.assertEqual([('a', 'b', 'c'), ('b', 'c', 'a')], list(iters.iter_rotate('abc', 3, 0, cycle=False)))
         self.assertEqual([('a', 'b'), ('b', 'c')], list(iters.iter_rotate('abc', 2, 0, cycle=False)))
+
+    @tests(iters.xy_flatten)
+    def test_flatten_xy(self):
+        self.assertEqual([1, 2, 3, 4], list(iters.xy_flatten([(1, 2), (3, 4)])))
+
+    @tests(iters.xy_iter)
+    def test_xyiter(self):
+        self.assertEqual([(1, 2), (3, 4)], list(iters.xy_iter([1, 2, 3, 4])))
+
