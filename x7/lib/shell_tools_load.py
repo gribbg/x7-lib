@@ -44,6 +44,6 @@ def load_tools(other_globals: dict):
             loaded_tools[k] = val
 
     if not loaded_modules:
-        print('No shell tools found')
+        print('No shell tools found')   # pragma: no cover
     else:
         x7.lib.shell_tools.tools()

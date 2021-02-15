@@ -1,7 +1,7 @@
 """Utilities for runtime patching of other classes/libraries"""
 
 
-def patch_base(name, bases, namespace):
+def patch_base_class(name, bases, namespace):
     """ Replace the base class methods with methods defined
         in the patch-class::
 

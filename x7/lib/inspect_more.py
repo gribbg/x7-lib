@@ -9,7 +9,7 @@ from types import ModuleType
 __all__ = ['item_name', 'item_lookup']
 
 
-def item_name(item: Union[Callable, Type, ModuleType]) -> str:
+def item_name(item: Union[Callable, Type, ModuleType, property]) -> str:
     """
         Return a dotted-notation name for a callable/type/typing alias.
         Raise ValueError if name can't be determined.
@@ -17,6 +17,8 @@ def item_name(item: Union[Callable, Type, ModuleType]) -> str:
 
     if isinstance(item, ModuleType):
         return item.__name__
+    if isinstance(item, property):
+        item = item.fget
     modname = getattr(item, '__module__', None)
     name = getattr(item, '__qualname__', None) or getattr(item, '__name__', None) or None
     if modname and name:

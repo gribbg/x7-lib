@@ -10,6 +10,18 @@ class TestModInspectMore(TestCase):
 
     TEST_INSPECT_MORE_NAME = 'tests.x7.lib.test_inspect_more.TestModInspectMore'
 
+    @staticmethod
+    def static_method():
+        pass                    # pragma: no cover
+
+    @classmethod
+    def class_method(cls):
+        return cls              # pragma: no cover
+
+    @property
+    def prop_get(self):
+        return self             # pragma: no cover
+
     class SubclassForTesting(object):
         pass
 
@@ -29,6 +41,9 @@ class TestModInspectMore(TestCase):
         subclass = self.TEST_INSPECT_MORE_NAME+'.SubclassForTesting'
         self.assertEqual(subclass, item_name(self.SubclassForTesting))
         self.assertEqual(subclass, item_name(TestModInspectMore.SubclassForTesting))
+        self.assertEqual(self.TEST_INSPECT_MORE_NAME+'.static_method', item_name(TestModInspectMore.static_method))
+        self.assertEqual(self.TEST_INSPECT_MORE_NAME+'.class_method', item_name(TestModInspectMore.class_method))
+        self.assertEqual(self.TEST_INSPECT_MORE_NAME+'.prop_get', item_name(TestModInspectMore.prop_get))
 
     @tests(item_lookup)
     def test_item_lookup(self):
