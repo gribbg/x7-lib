@@ -2,6 +2,7 @@ default: help
 
 # Based on https://gist.github.com/lumengxi/0ae4645124cd4066f676
 .PHONY: clean clean-pyc clean-build clean-os clean-test clean-docs
+.PHONY: init init-prod init-dev
 .PHONY: docs git-clean git-push lint
 .PHONY: test test-all test-via-setup
 .PHONY: help help-more help-common
@@ -48,9 +49,13 @@ help-common:
 venv:
 	$(SYS_PYTHON) -m venv venv
 
-init: venv
+init: init-prod init-dev
+
+init-prod:
 	$(PYTHON) -m pip -q install --upgrade pip
 	$(PYTHON) -m pip -q install -r requirements.txt
+
+init-dev:
 	$(PYTHON) -m pip -q install -r dev-requirements.txt
 
 clean: clean-build clean-pyc clean-test clean-os clean-docs
