@@ -1,7 +1,7 @@
 default: help
 
 # Based on https://gist.github.com/lumengxi/0ae4645124cd4066f676
-.PHONY: clean clean-pyc clean-build clean-os clean-test
+.PHONY: clean clean-pyc clean-build clean-os clean-test clean-docs
 .PHONY: docs git-clean git-push lint
 .PHONY: test test-all test-via-setup
 .PHONY: help help-more help-common
@@ -37,12 +37,12 @@ help-common:
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
+	@echo "dev-all - run make test coverage docs lint"
 	@echo "install - install the package to the active Python's site-packages"
 	@echo "dist - package"
 	@echo "upload-test - package and upload a release to test.pypi"
 	@echo "upload-prod - package and upload a release to pypi"
 	@echo ""
-	@echo "Full testing: make test lint coverage docs"
 	@echo "To upload to pypi.org: update __version__.py, commit, push, then 'make upload-prod'"
 
 venv:
@@ -53,7 +53,7 @@ init: venv
 	$(PYTHON) -m pip -q install -r requirements.txt
 	$(PYTHON) -m pip -q install -r dev-requirements.txt
 
-clean: clean-build clean-pyc clean-test clean-os
+clean: clean-build clean-pyc clean-test clean-os clean-docs
 
 clean-build:
 	rm -fr build/
@@ -76,6 +76,12 @@ clean-test:
 	rm -f .coverage
 	rm -fr htmlcov/
 
+clean-docs:
+	rm -rf docs/_build
+	rm -rf docs/_apidoc
+
+dev-all: test coverage docs lint
+
 lint:
 	$(PYTHON) -m flake8 $(PROJECT_DIR) tests
 
@@ -95,9 +101,9 @@ coverage:
 	$(BROWSER) htmlcov/index.html
 
 docs:
-	rm -f docs/$(PROJECT_DIR).rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ $(PROJECT_DIR)
+	rm -rf docs/_apidoc
+	sphinx-apidoc -o docs/_apidoc $(PROJECT_DIR)
+	rm docs/_apidoc/modules.rst
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

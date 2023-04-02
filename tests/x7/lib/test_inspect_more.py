@@ -30,7 +30,11 @@ class TestModInspectMore(TestCase):
         self.assertEqual('x7.lib.inspect_more.item_name', item_name(item_name))
         self.assertEqual(self.TEST_INSPECT_MORE_NAME + '.test_callable_name',
                          item_name(self.test_callable_name))
-        for bad_thing in [list(), 3]:
+
+        def bad_func():     # Construct something weird to cause specific error path in item_name
+            pass
+        bad_func.__module__ = None
+        for bad_thing in [list(), 3, bad_func]:
             bad_thing = cast(callable, bad_thing)       # Just to make lint type checking happy
             with self.assertRaises(ValueError):
                 item_name(bad_thing)

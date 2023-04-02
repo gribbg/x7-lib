@@ -13,6 +13,12 @@ all_tests = dict()  # type: Dict[Callable,Set[str]]
 StrOrCallable = Union[str, Callable, ModuleType]
 
 
+def _dummy(d: Dict):
+    # Dummy function to 'use' Dict so that pyflakes won't complain
+    # pyflakes does not understand that Dict is 'used' in a type: comment
+    pass
+
+
 def tests(arg0: StrOrCallable, *args: StrOrCallable) -> Callable:
     """Annotation to track what function(s) are tested by the wrapped function/class"""
 
