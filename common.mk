@@ -37,10 +37,13 @@ help-common:
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
+	@echo "install - install the package to the active Python's site-packages"
+	@echo "dist - package"
 	@echo "upload-test - package and upload a release to test.pypi"
 	@echo "upload-prod - package and upload a release to pypi"
-	@echo "dist - package"
-	@echo "install - install the package to the active Python's site-packages"
+	@echo ""
+	@echo "Full testing: make test lint coverage docs"
+	@echo "To upload to pypi.org: update __version__.py, commit, push, then 'make upload-prod'"
 
 venv:
 	$(SYS_PYTHON) -m venv venv
@@ -86,7 +89,7 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source $(PROJECT_DIR) setup.py test
+	coverage run --source $(PROJECT_DIR) -m unittest discover -s tests -t .
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html

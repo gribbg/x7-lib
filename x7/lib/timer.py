@@ -3,7 +3,8 @@ import time
 
 class Timer(object):
     """
-        Timer class to be used in with statement:
+        Timer class to be used in :code:`with` statement::
+
             with Timer('example'):
                 for n in range(1024):
                     math.sqrt(n)
@@ -19,5 +20,9 @@ class Timer(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.end = time.time_ns()
-        total = self.end - self.start
-        print('%s: %s ms' % (self.tag, total / 1000000))
+        print('%s: %s ms' % (self.tag, self.elapsed))
+
+    @property
+    def elapsed(self) -> float:
+        """Total time in seconds. Only valid after :code:`with` block"""
+        return (self.end - self.start) / 1000000000.0

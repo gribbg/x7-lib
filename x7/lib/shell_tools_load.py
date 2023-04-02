@@ -1,6 +1,7 @@
 """
-    Loader code for shell tools.  Don't call directly, use:
-    >>> from x7.shell import *
+    Loader code for shell tools.  Don't call directly, use::
+
+        >>> from x7.shell import *
 """
 
 import importlib

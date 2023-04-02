@@ -33,6 +33,7 @@ class TestModIters(TestCase):
         self.assertEqual([1, 2, 3, 4], list(iters.xy_flatten([(1, 2), (3, 4)])))
 
     @tests(iters.xy_iter)
-    def test_xyiter(self):
+    def test_xy_iter(self):
         self.assertEqual([(1, 2), (3, 4)], list(iters.xy_iter([1, 2, 3, 4])))
-
+        with self.assertRaises(ValueError):
+            list(iters.xy_iter([1, 2, 3]))

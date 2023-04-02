@@ -1,7 +1,7 @@
 """
     Shell tools for x7.lib
 
-    Usage: from x7.shell import *
+    Usage: :code:`from x7.shell import *`
 """
 
 from pprint import pp
