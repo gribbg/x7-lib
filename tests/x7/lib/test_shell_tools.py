@@ -3,7 +3,7 @@
 
 from unittest import TestCase
 from x7.lib.annotations import tests
-from x7.testing.support import Capture
+from x7.lib.capture import Capture
 from x7.lib import shell_tools
 from x7.lib.shell_tools_load import ShellTool
 
@@ -48,4 +48,5 @@ class TestModShellTools(TestCase):
         with Capture() as out:
             shell_tools.tools()
         self.assertIn('Help for tools', out.stdout())
+        self.assertIn('4 tools from x7.lib', out.stdout())
         self.assertGreaterEqual(out.stdout().count('\n'), 5)

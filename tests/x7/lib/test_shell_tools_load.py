@@ -2,9 +2,7 @@
 # By '--verbose --verbose x7.lib.shell_tools_load'
 
 from unittest import TestCase
-
-from x7.testing.support import Capture
-
+from x7.lib.capture import Capture
 from x7.lib.annotations import tests
 from x7.lib import shell_tools_load
 from x7.lib.shell_tools_load import ShellTool
@@ -26,8 +24,8 @@ class TestShellTool(TestCase):
         self.assertEqual('func - Func Doc: use func() to invoke', repr(st))
         with Capture() as out:
             st()
-        self.assertEqual('func called', out.stdout())
-        self.assertEqual('Func Doc', st.doc())
+        self.assertEqual('func called', out.stdout().strip())
+        self.assertEqual('Func Doc', st.doc().strip())
 
 
 @tests(shell_tools_load)
@@ -40,4 +38,4 @@ class TestModShellToolsLoad(TestCase):
         with Capture() as ignore:
             shell_tools_load.load_tools(found)
         self.assertIn('Dir', found)
-        self.assertIn('maketests', found)
+        self.assertIn('tools', found)

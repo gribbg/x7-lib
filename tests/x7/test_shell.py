@@ -3,7 +3,7 @@
 
 from unittest import TestCase
 from x7.lib.annotations import tests
-from x7.testing.support import Capture
+from x7.lib.capture import Capture
 with Capture() as ignored:
     from x7 import shell
 

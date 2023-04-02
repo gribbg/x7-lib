@@ -1,7 +1,7 @@
 from unittest import TestCase
 from x7.lib.annotations import tests
 from x7.lib.inspect_more import item_name, item_lookup
-from typing import Type, cast
+from typing import cast
 
 
 @tests('x7.lib.inspect_more')
@@ -30,8 +30,8 @@ class TestModInspectMore(TestCase):
         self.assertEqual('x7.lib.inspect_more.item_name', item_name(item_name))
         self.assertEqual(self.TEST_INSPECT_MORE_NAME + '.test_callable_name',
                          item_name(self.test_callable_name))
-        for bad_thing in [Type, list()]:
-            bad_thing = cast(callable, bad_thing)       # Just to make type checking happy
+        for bad_thing in [list(), 3]:
+            bad_thing = cast(callable, bad_thing)       # Just to make lint type checking happy
             with self.assertRaises(ValueError):
                 item_name(bad_thing)
 
