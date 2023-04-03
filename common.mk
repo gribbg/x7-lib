@@ -22,8 +22,8 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 PYTHON := ./venv/bin/python3
 SYS_PYTHON := python3
 DOCS_EXCLUDE :=
-DEV_UPDATE := $(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
-# DEV_UPDATE := $(PYTHON) -m x7.lib.utils.dev_update
+# DEV_UPDATE := $(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
+DEV_UPDATE := $(PYTHON) -m x7.lib.utils.dev_update
 COVERAGE_OMIT :=
 
 
