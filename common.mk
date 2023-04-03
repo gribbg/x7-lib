@@ -24,6 +24,7 @@ SYS_PYTHON := python3
 DOCS_EXCLUDE :=
 DEV_UPDATE := $(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
 # DEV_UPDATE := $(PYTHON) -m x7.lib.utils.dev_update
+COVERAGE_OMIT :=
 
 
 # Don't descend into any dotted dirs or venv.  Use like '$(FIND_SKIP) -other -find -args'
@@ -110,8 +111,8 @@ test-all:
 
 coverage:
 	coverage run --source $(PROJECT_DIR) -m unittest discover -s tests -t .
-	coverage report -m
-	coverage html
+	coverage report -m $(COVERAGE_OMIT)
+	coverage html $(COVERAGE_OMIT)
 	$(BROWSER) htmlcov/index.html
 
 docs:

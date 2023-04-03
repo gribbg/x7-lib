@@ -16,7 +16,7 @@ StrOrCallable = Union[str, Callable, ModuleType]
 def _dummy(d: Dict):
     # Dummy function to 'use' Dict so that pyflakes won't complain
     # pyflakes does not understand that Dict is 'used' in a type: comment
-    pass
+    pass    # pragma: no cover
 
 
 def tests(arg0: StrOrCallable, *args: StrOrCallable) -> Callable:
