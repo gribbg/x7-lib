@@ -1,3 +1,4 @@
+# The expectation is that all x7 projects need these same tools for development
 coverage
 flake8
 sphinx

@@ -3,6 +3,7 @@ default: help
 # Based on https://gist.github.com/lumengxi/0ae4645124cd4066f676
 .PHONY: clean clean-pyc clean-build clean-os clean-test clean-docs
 .PHONY: init init-prod init-dev
+.PHONY: dev-all dev-update
 .PHONY: docs git-clean git-push lint
 .PHONY: test test-all test-via-setup
 .PHONY: help help-more help-common
@@ -19,7 +20,7 @@ endef
 export BROWSER_PYSCRIPT
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 PYTHON := ./venv/bin/python3
-SYS_PYTHON := python3.8
+SYS_PYTHON := python3
 
 # Don't descend into any dotted dirs or venv.  Use like '$(FIND_SKIP) -other -find -args'
 FIND_SKIP := find -E . -regex './(\..*|venv).*' -prune -o
@@ -39,6 +40,7 @@ help-common:
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
 	@echo "dev-all - run make test coverage docs lint"
+	@echo "dev-update - auto-update common files from x7-lib"
 	@echo "install - install the package to the active Python's site-packages"
 	@echo "dist - package"
 	@echo "upload-test - package and upload a release to test.pypi"
@@ -85,7 +87,11 @@ clean-docs:
 	rm -rf docs/_build
 	rm -rf docs/_apidoc
 
-dev-all: test coverage docs lint
+dev-all: dev-update test coverage docs lint
+
+dev-update:
+	$(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
+# $(PYTHON) -m x7.lib.utils.dev_update
 
 lint:
 	$(PYTHON) -m flake8 $(PROJECT_DIR) tests
