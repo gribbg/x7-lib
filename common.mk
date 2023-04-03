@@ -21,6 +21,10 @@ export BROWSER_PYSCRIPT
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 PYTHON := ./venv/bin/python3
 SYS_PYTHON := python3
+DOCS_EXCLUDE :=
+DEV_UPDATE := $(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
+# DEV_UPDATE := $(PYTHON) -m x7.lib.utils.dev_update
+
 
 # Don't descend into any dotted dirs or venv.  Use like '$(FIND_SKIP) -other -find -args'
 FIND_SKIP := find -E . -regex './(\..*|venv).*' -prune -o
@@ -90,8 +94,7 @@ clean-docs:
 dev-all: dev-update test coverage docs lint
 
 dev-update:
-	$(PYTHON) ../x7-lib/x7/lib/utils/dev_update.py
-# $(PYTHON) -m x7.lib.utils.dev_update
+	$(DEV_UPDATE)
 
 lint:
 	$(PYTHON) -m flake8 $(PROJECT_DIR) tests
@@ -113,7 +116,7 @@ coverage:
 
 docs:
 	rm -rf docs/_apidoc
-	sphinx-apidoc -o docs/_apidoc $(PROJECT_DIR)
+	sphinx-apidoc -o docs/_apidoc $(PROJECT_DIR) $(DOCS_EXCLUDE)
 	rm docs/_apidoc/modules.rst
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
