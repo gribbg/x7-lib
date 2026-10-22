@@ -9,8 +9,9 @@
       <excludeFolder url="file://$MODULE_DIR$/x7_lib.egg-info" />
       <excludeFolder url="file://$MODULE_DIR$/docs/_build" />
       <excludeFolder url="file://$MODULE_DIR$/docs/_apidoc" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 (x7-lib)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="~\dev\x7-lib\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

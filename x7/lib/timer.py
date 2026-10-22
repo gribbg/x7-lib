@@ -20,9 +20,18 @@ class Timer(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.end = time.time_ns()
-        print('%s: %s ms' % (self.tag, self.elapsed))
+        print(f'{self.tag}: {self.elapsed_friendly()}')
 
     @property
     def elapsed(self) -> float:
         """Total time in seconds. Only valid after :code:`with` block"""
-        return (self.end - self.start) / 1000000000.0
+        return (self.end - self.start) / 1_000_000_000.0
+
+    def elapsed_friendly(self) -> str:
+        """Human-friendly version of time in seconds, milliseconds, or microseconds."""
+        elapsed = self.elapsed
+        if elapsed >= 1:
+            return f'{elapsed:.3g}s'
+        elif elapsed >= 1/1000:
+            return f'{elapsed * 1_000:.3g}ms'
+        return f'{elapsed * 1_000_000:.3g}μs'   # aka \u03bc

@@ -14,4 +14,18 @@ class TestTimer(TestCase):
         t = Timer('test timer')
         with t:
             time.sleep(0.1)
-        self.assertGreater(t.elapsed, 0.01)
+        self.assertGreater(t.elapsed, 0.09)
+        self.assertLess(t.elapsed, 0.11)
+
+    @tests(Timer.elapsed_friendly)
+    def test_elapsed_friendly(self):
+        t = Timer('test timer')
+        t.start = 0
+        t.end = 5
+        self.assertEndsWith(t.elapsed_friendly(), '0.005μs')
+        t.end = 1_500
+        self.assertEndsWith(t.elapsed_friendly(), '1.5μs')
+        t.end = 1_600_000
+        self.assertEndsWith(t.elapsed_friendly(), '1.6ms')
+        t.end = 1_400_000_000
+        self.assertEndsWith(t.elapsed_friendly(), '1.4s')
